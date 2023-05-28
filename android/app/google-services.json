@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "354834727743",
+    "project_id": "finalaxuillo",
+    "storage_bucket": "finalaxuillo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354834727743:android:418290637050751830898a",
+        "android_client_info": {
+          "package_name": "com.example.mahmoud"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354834727743-uc03qd5unn6j8ueroj0ur9aq1lrk4dl4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlIQfBpgiJwkk5_h4WV2BibOwPXDIfTOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "354834727743-uc03qd5unn6j8ueroj0ur9aq1lrk4dl4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
