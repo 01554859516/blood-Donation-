@@ -23,13 +23,13 @@ class _DonorScreenState extends State<DonorScreen> {
               padding: const EdgeInsets.only(
                 top: 15,
               ),
-              child: CircleAvatar(
-                // maxRadius: 20,
-                // minRadius: 20,
-                radius: 20,
-                backgroundImage: NetworkImage(
-                    "https://images.unsplash.com/photo-1615109398623-88346a601842?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fG1hbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400&q=60"),
-              ),
+              // child: CircleAvatar(
+              //   // maxRadius: 20,
+              //   // minRadius: 20,
+              //   radius: 20,
+              //   backgroundImage: NetworkImage(
+              //       "https://imag-88346a601842?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fG1hbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400&q=60"),
+              // ),
             ),
             title: Padding(
               padding: const EdgeInsets.only(top: 15),

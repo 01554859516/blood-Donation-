@@ -51,8 +51,7 @@ class _lab_profileState extends State<lab_profile> {
               width: 250,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: NetworkImage(
-                        'https://images.unsplash.com/photo-1578991624414-276ef23a534f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NjR8fGhvc3BpdGFsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60'),
+                    image: NetworkImage('${widget.document["imgLink"]}'),
                     fit: BoxFit.cover),
                 borderRadius: BorderRadius.circular(20),
                 color: Color(

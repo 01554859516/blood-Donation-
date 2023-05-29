@@ -1,10 +1,14 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mahmoud/screans/lab/login_lab.dart';
-
+import 'package:path/path.dart' show basename;
 import 'package:mahmoud/screans/login_screen.dart';
 import 'package:mahmoud/shared/snakbar.dart';
 
@@ -19,6 +23,8 @@ class RegisterScreenLab extends StatefulWidget {
 class _RegisterScreenLabState extends State<RegisterScreenLab> {
   bool isLoading = false;
   bool isVisable = true;
+  File? imgPath;
+  String? imgName;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final genderController = TextEditingController();
@@ -30,6 +36,69 @@ class _RegisterScreenLabState extends State<RegisterScreenLab> {
   final _formKey = GlobalKey<FormState>();
   late String collectionname;
 
+  uploadImageScreen(ImageSource select) async {
+    final pickedImg = await ImagePicker().pickImage(source: select);
+    try {
+      if (pickedImg != null) {
+        setState(() {
+          imgPath = File(pickedImg.path);
+          imgName = basename(pickedImg.path);
+          int random = Random().nextInt(99999999);
+          imgName = "$random$imgName";
+        });
+      } else {
+        print("NO img selected");
+      }
+    } catch (e) {
+      print("Error => $e");
+    }
+    if (!mounted) return;
+    Navigator.pop(context);
+  }
+
+  showmodel() {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(22),
+          color: Color.fromARGB(255, 252, 253, 255),
+          height: 170,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  await uploadImageScreen(ImageSource.camera);
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.camera),
+                    Text("from camera"),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 22,
+              ),
+              GestureDetector(
+                onTap: () async {
+                  await uploadImageScreen(ImageSource.gallery);
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.photo_outlined),
+                    Text("from Gallery"),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   register() async {
     try {
       final credential =
@@ -37,7 +106,11 @@ class _RegisterScreenLabState extends State<RegisterScreenLab> {
         email: emailController.text,
         password: passwordController.text,
       );
-      print(credential.user!.uid);
+      final storageRef = FirebaseStorage.instance.ref("AnalysisLabs/$imgName");
+      await storageRef.putFile(imgPath!);
+      String url = await storageRef.getDownloadURL();
+
+      credential.user!.uid;
 
       CollectionReference users =
           FirebaseFirestore.instance.collection('AnalysisLabs');
@@ -45,6 +118,7 @@ class _RegisterScreenLabState extends State<RegisterScreenLab> {
       users
           .doc(credential.user!.uid)
           .set({
+            'imgLink': url,
             'email': emailController.text,
             'password': passwordController.text,
             'fullname': fullnameController.text,
@@ -101,7 +175,7 @@ class _RegisterScreenLabState extends State<RegisterScreenLab> {
             child: Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
                     height: 10,
@@ -113,6 +187,51 @@ class _RegisterScreenLabState extends State<RegisterScreenLab> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  //////////////
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color.fromARGB(125, 78, 91, 110)),
+                    child: Stack(
+                      children: [
+                        imgPath == null
+                            ? CircleAvatar(
+                                backgroundColor:
+                                    Color.fromARGB(255, 225, 225, 225),
+                                radius: 64,
+                                backgroundImage:
+                                    AssetImage("assets/avatar.png"),
+                              )
+                            : ClipOval(
+                                child: Image.file(
+                                  imgPath!,
+                                  width: 145,
+                                  height: 145,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                        Positioned(
+                          left: 92,
+                          bottom: -10,
+                          child: IconButton(
+                            onPressed: () {
+                              // uploadImageScreen();
+                              showmodel();
+                            },
+                            icon: Icon(
+                              Icons.add_a_photo,
+                              color: Color.fromARGB(255, 94, 115, 128),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
                   SizedBox(
                     height: 20.0,
                   ),
@@ -295,7 +414,9 @@ class _RegisterScreenLabState extends State<RegisterScreenLab> {
                     color: Colors.blue,
                     child: MaterialButton(
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
+                        if (_formKey.currentState!.validate() &&
+                            imgName != null &&
+                            imgPath != null) {
                           await register();
                           if (!mounted) return;
                           Navigator.push(

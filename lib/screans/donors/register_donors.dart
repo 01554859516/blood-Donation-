@@ -658,7 +658,7 @@ class _RegisterScreenDonorsState extends State<RegisterScreenDonors> {
       await storageRef.putFile(imgPath!);
       String url = await storageRef.getDownloadURL();
 
-      print(credential.user!.uid);
+      credential.user!.uid;
 
       CollectionReference users =
           FirebaseFirestore.instance.collection('UsersDonors');
@@ -723,7 +723,7 @@ class _RegisterScreenDonorsState extends State<RegisterScreenDonors> {
             child: Form(
               key: _formKey,
               child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
                     height: 10,
@@ -738,6 +738,7 @@ class _RegisterScreenDonorsState extends State<RegisterScreenDonors> {
                   SizedBox(
                     height: 20.0,
                   ),
+                  //////////////
                   Container(
                     padding: EdgeInsets.all(5),
                     decoration: BoxDecoration(
@@ -778,6 +779,7 @@ class _RegisterScreenDonorsState extends State<RegisterScreenDonors> {
                       ],
                     ),
                   ),
+                  ///////////
                   SizedBox(
                     height: 20.0,
                   ),

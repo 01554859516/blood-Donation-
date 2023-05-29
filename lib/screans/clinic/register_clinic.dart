@@ -7,7 +7,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mahmoud/screans/clinic/clinic_login.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:mahmoud/screans/login_screen.dart';
+
 import 'package:mahmoud/shared/snakbar.dart';
 import 'package:path/path.dart' show basename;
 
@@ -174,7 +174,7 @@ class _RegisterScreenClinicState extends State<RegisterScreenClinic> {
             child: Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
                     height: 10,

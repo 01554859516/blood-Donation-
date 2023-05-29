@@ -62,7 +62,7 @@ class _profileState extends State<profile> {
                 child: Stack(
                   children: [
                     imgPath == null
-                        ? ImgUserDonor()
+                        ? ImgUserDonors()
                         : ClipOval(
                             child: Image.file(
                               imgPath!,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mahmoud/componets/search_bar.dart';
-import 'package:mahmoud/screans/home.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mahmoud/screans/hospital/Hospital_Profile.dart';
 
@@ -102,8 +101,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     leading: CircleAvatar(
-                      backgroundColor: Color(0xff6ae792),
-                      child: Icon(Icons.person),
+                      backgroundImage: NetworkImage(docs[index]["imgLink"]),
                     ),
 
                     title: Padding(

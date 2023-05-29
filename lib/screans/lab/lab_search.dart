@@ -103,10 +103,8 @@ class _lab_searchState extends State<lab_search> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     leading: CircleAvatar(
-                      backgroundColor: Color(0xff6ae792),
-                      child: Icon(Icons.person),
+                      backgroundImage: NetworkImage(docs[index]["imgLink"]),
                     ),
-
                     title: Padding(
                       padding: const EdgeInsets.only(left: 25),
                       child: Row(
